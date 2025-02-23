@@ -1,0 +1,4 @@
+- Always use functional components and hooks instead of class components.
+- Always use TypeScript types for type checking props.
+- Avoid inline styles and use only bootstrap 5 classes.
+- Follow the DRY (Don't Repeat Yourself) principle and extract common logic into custom hooks.
