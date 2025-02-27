@@ -9,18 +9,18 @@ import { SEARCH_PARAM, PAGE_PARAM, YEAR_PARAM, ITEMS_PER_PAGE, DEFAULT_PAGE } fr
 const MovieSearch = () => {
   const [searchParams, setSearchParams] = useSearchParams();
 
-  const seacrh = searchParams.get(SEARCH_PARAM) ?? "";
-  const currentPage = parseInt(searchParams.get(PAGE_PARAM) ?? "") || DEFAULT_PAGE;
-  const year = parseInt(searchParams.get(YEAR_PARAM) ?? "") || undefined;
+  const search = searchParams.get(SEARCH_PARAM) ?? "";
+  const currentPage = Number(searchParams.get(PAGE_PARAM)) || DEFAULT_PAGE;
+  const year = Number(searchParams.get(YEAR_PARAM)) || undefined;
 
   const { currentData, isError, isFetching, isUninitialized } = useSearchMoviesQuery(
-    { movieTitle: seacrh, page: currentPage, year: year },
-    { skip: !seacrh }
+    { movieTitle: search, page: currentPage, year },
+    { skip: !search }
   );
 
   const movies = currentData?.results ?? [];
   const totalPages = currentData?.total_pages ?? DEFAULT_PAGE;
-  const isNoMoviesFound = !isError && !isUninitialized && !isFetching && movies.length == 0;
+  const isNoMoviesFound = !isError && !isUninitialized && !isFetching && movies.length === 0;
 
   const handleSearch = (data: SearchFormInput) => {
     const newParams = new URLSearchParams(searchParams);
@@ -46,7 +46,7 @@ const MovieSearch = () => {
 
   return (
     <>
-      <SearchForm form={{ movieTitle: seacrh, year: year }} onSubmit={handleSearch} />
+      <SearchForm form={{ movieTitle: search, year }} onSubmit={handleSearch} />
 
       <Container className="mt-3">
         {isFetching && <Spinner />}
@@ -68,7 +68,7 @@ const MovieSearch = () => {
                 itemsCount={totalPages}
                 itemsPerPage={ITEMS_PER_PAGE}
                 onPageChanged={handlePageChange}
-              ></Pagination>
+              />
             </Container>
           </>
         )}

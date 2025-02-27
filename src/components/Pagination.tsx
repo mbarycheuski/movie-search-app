@@ -17,13 +17,13 @@ const PaginationComponent = ({
   alwaysShown = false,
 }: PaginationComponentProps) => {
   const pagesCount = Math.ceil(itemsCount / itemsPerPage);
-  const isPaginationShown = alwaysShown ? true : pagesCount > 1;
+  const isPaginationShown = alwaysShown || pagesCount > 1;
   const isCurrentPageFirst = currentPage === 1;
   const isCurrentPageLast = currentPage === pagesCount;
 
-  const changePage = (number: number) => {
-    if (currentPage === number) return;
-    onPageChanged(number);
+  const changePage = (pageNumber: number) => {
+    if (currentPage === pageNumber) return;
+    onPageChanged(pageNumber);
   };
 
   const handlePageNumberClick = (pageNumber: number) => {
@@ -68,7 +68,7 @@ const PaginationComponent = ({
   });
 
   useEffect(() => {
-    if (currentPage > pagesCount && pagesCount != 0) {
+    if (currentPage > pagesCount && pagesCount !== 0) {
       onPageChanged(pagesCount);
     }
   }, [pagesCount, currentPage, onPageChanged]);
