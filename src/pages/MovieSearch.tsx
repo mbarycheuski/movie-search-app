@@ -4,7 +4,13 @@ import { SearchFormInput } from "../types";
 import { DEFAULT_PAGE } from "../constants";
 import { useQueryParameters } from "../hooks";
 import { useSearchMoviesQuery } from "../api/services";
-import { SearchForm, Spinner, MovieSearchError, MoviesList, NoMoviesFound } from "../components";
+import {
+  SearchForm,
+  Spinner,
+  MovieSearchError,
+  MovieSearchList,
+  NoMoviesFound,
+} from "../components";
 
 const MovieSearch = () => {
   const {
@@ -50,7 +56,7 @@ const MovieSearch = () => {
     if (isNoMoviesFound) return <NoMoviesFound className="d-flex justify-content-center mt-3" />;
 
     return (
-      <MoviesList
+      <MovieSearchList
         movies={movies}
         currentPage={currentPage}
         totalPages={totalPages}

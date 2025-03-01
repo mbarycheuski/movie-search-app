@@ -1,16 +1,21 @@
 import { Container, Row, Col } from "react-bootstrap";
 import { Movie } from "../api/models";
 import { ITEMS_PER_PAGE } from "../constants";
-import { MovieCard, Pagination } from "../components";
+import { MovieCard, Pagination } from ".";
 
-type MoviesListProps = {
+type MovieSearchListProps = {
   movies: Movie[];
   currentPage: number;
   totalPages: number;
   onPageChanged: (page: number) => void;
 };
 
-const MoviesList = ({ movies, currentPage, totalPages, onPageChanged }: MoviesListProps) => {
+const MovieSearchList = ({
+  movies,
+  currentPage,
+  totalPages,
+  onPageChanged,
+}: MovieSearchListProps) => {
   if (movies.length === 0) return null;
 
   return (
@@ -36,4 +41,4 @@ const MoviesList = ({ movies, currentPage, totalPages, onPageChanged }: MoviesLi
   );
 };
 
-export default MoviesList;
+export default MovieSearchList;
