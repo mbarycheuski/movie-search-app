@@ -7,7 +7,7 @@ type MovieRatingProps = {
 };
 
 const MovieRating = ({ rating, starsCount = DEFAULT_STARS_COUNT }: MovieRatingProps) => {
-  const getStarClass = useRatingStarClass(rating);
+  const { getStarClass } = useRatingStarClass(rating);
   const starsArray = useArray<number>(starsCount);
 
   return (

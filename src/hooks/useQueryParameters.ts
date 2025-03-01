@@ -14,9 +14,7 @@ const validatePage = (page: number) => page > 0 && page <= MAX_PAGE;
 
 const validateYear = (year?: number) => !year || (year > MIN_YEAR && year <= MAX_YEAR);
 
-const validateSearch = (search?: string) => !search || search.length > 0;
-
-type UseSearchParameters = {
+type QueryParameters = {
   search?: string;
   page?: number;
   year?: number;
@@ -29,11 +27,11 @@ const useQueryParameters = () => {
   const page = Number(searchParams.get(PAGE_PARAM)) || DEFAULT_PAGE;
   const year = Number(searchParams.get(YEAR_PARAM)) || undefined;
 
-  const isValid = validateSearch(search) && validatePage(page) && validateYear(year);
+  const isValid = validatePage(page) && validateYear(year);
 
-  const queryParams: UseSearchParameters = { search: search, page, year };
+  const queryParams: QueryParameters = { search, page, year };
 
-  const replaceQueryParams = (params: UseSearchParameters): void => {
+  const replaceQueryParams = (params: QueryParameters) => {
     const newParams = new URLSearchParams(searchParams);
 
     setOrDeleteSearchParam(newParams, SEARCH_PARAM, params.search);

@@ -1,10 +1,10 @@
 import { useCallback } from "react";
-import { Container, Row, Col } from "react-bootstrap";
+import { Container } from "react-bootstrap";
 import { SearchFormInput } from "../types";
+import { DEFAULT_PAGE } from "../constants";
 import { useQueryParameters } from "../hooks";
 import { useSearchMoviesQuery } from "../api/services";
-import { ITEMS_PER_PAGE, DEFAULT_PAGE } from "../constants";
-import { SearchForm, MovieCard, Pagination, Spinner, MovieSearchError } from "../components";
+import { SearchForm, Spinner, MovieSearchError, MoviesList, NoMoviesFound } from "../components";
 
 const MovieSearch = () => {
   const {
@@ -25,8 +25,8 @@ const MovieSearch = () => {
   const totalPages = currentData?.total_pages ?? DEFAULT_PAGE;
   const isNoMoviesFound = !isError && !isUninitialized && !isFetching && movies.length === 0;
 
-  const handleSearch = (data: SearchFormInput) => {
-    replaceQueryParams({ search: data.movieTitle.trim(), year: data.year });
+  const handleSearch = (searchFormInput: SearchFormInput) => {
+    replaceQueryParams({ search: searchFormInput.movieTitle.trim(), year: searchFormInput.year });
   };
 
   const handlePageChange = useCallback(
@@ -36,52 +36,42 @@ const MovieSearch = () => {
     [replaceQueryParams, search, year]
   );
 
+  const renderContainer = () => {
+    if (isFetching) return <Spinner />;
+
+    if (isError)
+      return (
+        <MovieSearchError
+          className="d-flex justify-content-center mt-3"
+          message="Something went wrong while fetching the movies. Please try again later."
+        />
+      );
+
+    if (isNoMoviesFound) return <NoMoviesFound className="d-flex justify-content-center mt-3" />;
+
+    return (
+      <MoviesList
+        movies={movies}
+        currentPage={currentPage}
+        totalPages={totalPages}
+        onPageChanged={handlePageChange}
+      />
+    );
+  };
+
   if (!isValidParameters) {
-    return <MovieSearchError className="mt-3" message="Invalid search parameters." />;
+    return (
+      <MovieSearchError
+        className="d-flex justify-content-center mt-3"
+        message="Invalid search parameters."
+      />
+    );
   }
 
   return (
     <>
       <SearchForm form={{ movieTitle: searchTitle, year }} onSubmit={handleSearch} />
-
-      <Container className="mt-3">
-        {isFetching && <Spinner />}
-
-        {!isError && !isFetching && movies && (
-          <>
-            <Container>
-              <Row>
-                {movies.map((movie) => (
-                  <Col key={movie.id} xs={12} sm={6} md={4} lg={3} className="mb-3">
-                    <MovieCard movie={movie} />
-                  </Col>
-                ))}
-              </Row>
-            </Container>
-            <Container className="d-flex justify-content-center mt-3">
-              <Pagination
-                currentPage={currentPage}
-                itemsCount={totalPages}
-                itemsPerPage={ITEMS_PER_PAGE}
-                onPageChanged={handlePageChange}
-              />
-            </Container>
-          </>
-        )}
-
-        {isNoMoviesFound && (
-          <Container className="d-flex justify-content-center mt-3">
-            <h5 className="text-dark">No movies found</h5>
-          </Container>
-        )}
-
-        {isError && (
-          <MovieSearchError
-            className="mt-3"
-            message="Something went wrong while fetching the movies. Please try again later."
-          />
-        )}
-      </Container>
+      <Container className="mt-3">{renderContainer()}</Container>
     </>
   );
 };

@@ -1,13 +1,12 @@
 import { Container, Alert } from "react-bootstrap";
 
-type MovieSearchErrorProps = {
+type MovieSearchErrorProps = React.ComponentProps<typeof Container> & {
   message: string;
-  className?: string;
 };
 
-const MovieSearchError = ({ message, className }: MovieSearchErrorProps) => {
+const MovieSearchError = ({ message, className, ...props }: MovieSearchErrorProps) => {
   return (
-    <Container className={`d-flex justify-content-center ${className}`}>
+    <Container className={className} {...props}>
       <Alert variant="danger">
         <Alert.Heading>Oh snap! You got an error!</Alert.Heading>
         <p>{message}</p>

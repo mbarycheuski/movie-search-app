@@ -15,7 +15,7 @@ const SearchForm = ({ form, onSubmit }: SearchFormProps) => {
     handleSubmit,
     setValue,
     formState: { errors, touchedFields },
-  } = useForm<SearchFormInput>({});
+  } = useForm<SearchFormInput>();
 
   useEffect(() => {
     setValue("movieTitle", form.movieTitle);

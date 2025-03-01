@@ -3,10 +3,10 @@ import { checkNumberFractionalPart, getNumberWholePart } from "../utils";
 const BASE_ICON_CLASS = "bi";
 
 const useRatingStarClass = (rating: number) => {
-  return (starIndex: number): string => {
-    const wholeRating = getNumberWholePart(rating);
-    const hasFractionalPart = checkNumberFractionalPart(rating);
+  const wholeRating = getNumberWholePart(rating);
+  const hasFractionalPart = checkNumberFractionalPart(rating);
 
+  const getStarClass = (starIndex: number): string => {
     if (starIndex < wholeRating) {
       return `${BASE_ICON_CLASS} bi-star-fill text-warning`;
     }
@@ -17,6 +17,8 @@ const useRatingStarClass = (rating: number) => {
 
     return `${BASE_ICON_CLASS} bi-star text-muted`;
   };
+
+  return { getStarClass };
 };
 
 export default useRatingStarClass;
