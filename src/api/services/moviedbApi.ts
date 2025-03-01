@@ -20,11 +20,16 @@ export const moviedbApi = createApi({
       { movieTitle: string; page?: number; year?: number }
     >({
       query: ({ movieTitle, page = DEFAULT_PAGE, year }) => {
-        let queryString = `search/movie?query=${movieTitle}&page=${page}`;
+        const params = new URLSearchParams({
+          query: movieTitle,
+          page: page.toString(),
+        });
+
         if (year) {
-          queryString += `&primary_release_year=${year}`;
+          params.set("primary_release_year", year.toString());
         }
-        return queryString;
+
+        return `search/movie?${params}`;
       },
       transformResponse: (response: MovieResponse) => {
         return {

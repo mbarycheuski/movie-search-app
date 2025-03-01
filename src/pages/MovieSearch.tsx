@@ -1,21 +1,24 @@
 import { useCallback } from "react";
-import { useSearchParams } from "react-router";
-import { Container, Row, Col, Alert } from "react-bootstrap";
+import { Container, Row, Col } from "react-bootstrap";
 import { SearchFormInput } from "../types";
+import { useQueryParameters } from "../hooks";
 import { useSearchMoviesQuery } from "../api/services";
-import { SearchForm, MovieCard, Pagination, Spinner } from "../components";
-import { SEARCH_PARAM, PAGE_PARAM, YEAR_PARAM, ITEMS_PER_PAGE, DEFAULT_PAGE } from "../constants";
+import { ITEMS_PER_PAGE, DEFAULT_PAGE } from "../constants";
+import { SearchForm, MovieCard, Pagination, Spinner, MovieSearchError } from "../components";
 
 const MovieSearch = () => {
-  const [searchParams, setSearchParams] = useSearchParams();
+  const {
+    queryParams: { search, page, year },
+    isValid: isValidParameters,
+    replaceQueryParams,
+  } = useQueryParameters();
 
-  const search = searchParams.get(SEARCH_PARAM) ?? "";
-  const currentPage = Number(searchParams.get(PAGE_PARAM)) || DEFAULT_PAGE;
-  const year = Number(searchParams.get(YEAR_PARAM)) || undefined;
+  const searchTitle = search ?? "";
+  const currentPage = page ?? DEFAULT_PAGE;
 
   const { currentData, isError, isFetching, isUninitialized } = useSearchMoviesQuery(
-    { movieTitle: search, page: currentPage, year },
-    { skip: !search }
+    { movieTitle: searchTitle, page: currentPage, year },
+    { skip: !searchTitle || !isValidParameters }
   );
 
   const movies = currentData?.results ?? [];
@@ -23,30 +26,23 @@ const MovieSearch = () => {
   const isNoMoviesFound = !isError && !isUninitialized && !isFetching && movies.length === 0;
 
   const handleSearch = (data: SearchFormInput) => {
-    const newParams = new URLSearchParams(searchParams);
-    newParams.delete(PAGE_PARAM);
-
-    newParams.set(SEARCH_PARAM, data.movieTitle.trim());
-
-    if (data.year) newParams.set("year", data.year.toString());
-    else newParams.delete("year");
-
-    setSearchParams(newParams, { replace: true });
+    replaceQueryParams({ search: data.movieTitle.trim(), year: data.year });
   };
 
   const handlePageChange = useCallback(
     (page: number) => {
-      const newParams = new URLSearchParams(searchParams);
-      newParams.set(PAGE_PARAM, page.toString());
-
-      setSearchParams(newParams, { replace: true });
+      replaceQueryParams({ search, page, year });
     },
-    [searchParams, setSearchParams]
+    [replaceQueryParams, search, year]
   );
+
+  if (!isValidParameters) {
+    return <MovieSearchError className="mt-3" message="Invalid search parameters." />;
+  }
 
   return (
     <>
-      <SearchForm form={{ movieTitle: search, year }} onSubmit={handleSearch} />
+      <SearchForm form={{ movieTitle: searchTitle, year }} onSubmit={handleSearch} />
 
       <Container className="mt-3">
         {isFetching && <Spinner />}
@@ -80,12 +76,10 @@ const MovieSearch = () => {
         )}
 
         {isError && (
-          <Container className="d-flex justify-content-center mt-3">
-            <Alert variant="danger">
-              <Alert.Heading>Oh snap! You got an error!</Alert.Heading>
-              <p>Something went wrong while fetching the movies. Please try again later.</p>
-            </Alert>
-          </Container>
+          <MovieSearchError
+            className="mt-3"
+            message="Something went wrong while fetching the movies. Please try again later."
+          />
         )}
       </Container>
     </>

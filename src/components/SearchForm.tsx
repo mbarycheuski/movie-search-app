@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { Form, Button, Row, Col } from "react-bootstrap";
 import { SearchFormInput } from "../types";
-import { CURRENT_YEAR, MIN_YEAR } from "../constants";
+import { MAX_YEAR, MIN_YEAR } from "../constants";
 
 type SearchFormProps = {
   form: SearchFormInput;
@@ -15,15 +15,12 @@ const SearchForm = ({ form, onSubmit }: SearchFormProps) => {
     handleSubmit,
     setValue,
     formState: { errors, touchedFields },
-  } = useForm<SearchFormInput>();
+  } = useForm<SearchFormInput>({});
 
   useEffect(() => {
     setValue("movieTitle", form.movieTitle);
-  }, [form.movieTitle, setValue]);
-
-  useEffect(() => {
     setValue("year", form.year);
-  }, [form.year, setValue]);
+  }, [setValue, form.movieTitle, form.year]);
 
   return (
     <Form onSubmit={handleSubmit(onSubmit)}>
@@ -49,8 +46,8 @@ const SearchForm = ({ form, onSubmit }: SearchFormProps) => {
                 message: `Movie year must be greater than ${MIN_YEAR}`,
               },
               max: {
-                value: CURRENT_YEAR,
-                message: `Movie year must be less than ${CURRENT_YEAR}`,
+                value: MAX_YEAR,
+                message: `Movie year must be less than ${MAX_YEAR}`,
               },
             })}
             isInvalid={errors.year && touchedFields.year}

@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import { Pagination } from "react-bootstrap";
+import { useArray } from "../hooks";
 
 type PaginationComponentProps = {
   itemsCount: number;
@@ -20,6 +21,7 @@ const PaginationComponent = ({
   const isPaginationShown = alwaysShown || pagesCount > 1;
   const isCurrentPageFirst = currentPage === 1;
   const isCurrentPageLast = currentPage === pagesCount;
+  const pageNumbersArray = useArray<number>(pagesCount);
 
   const changePage = (pageNumber: number) => {
     if (currentPage === pageNumber) return;
@@ -40,7 +42,7 @@ const PaginationComponent = ({
 
   let isPageNumberOutOfRange: boolean;
 
-  const pageNumbers = [...new Array(pagesCount)].map((_, index) => {
+  const pageNumbers = pageNumbersArray.map((_, index) => {
     const pageNumber = index + 1;
     const isPageNumberFirst = pageNumber === 1;
     const isPageNumberLast = pageNumber === pagesCount;
