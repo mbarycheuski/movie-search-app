@@ -19,8 +19,8 @@ const MovieSearch = () => {
     replaceQueryParams,
   } = useQueryParameters();
 
-  const searchTitle = search ?? "";
-  const currentPage = page ?? DEFAULT_PAGE;
+  const searchTitle = search || "";
+  const currentPage = page || DEFAULT_PAGE;
 
   const { currentData, isError, isFetching, isUninitialized } = useSearchMoviesQuery(
     { movieTitle: searchTitle, page: currentPage, year },

@@ -2,9 +2,9 @@ import { Container } from "react-bootstrap";
 
 type NoMoviesFoundProps = React.ComponentProps<typeof Container>;
 
-const NoMoviesFound = ({ className, ...props }: NoMoviesFoundProps) => {
+const NoMoviesFound = (props: NoMoviesFoundProps) => {
   return (
-    <Container className={className} {...props}>
+    <Container {...props}>
       <h5 className="text-dark">No movies found</h5>
     </Container>
   );
