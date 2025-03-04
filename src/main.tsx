@@ -1,21 +1,16 @@
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
-import { BrowserRouter, Routes, Route } from "react-router";
+import { Provider } from "react-redux";
+import { store } from "./store";
+import AppRouter from "./AppRouter";
 import "./index.css";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { PageLayout, MovieDetails, MovieList, MovieSearch, NotFound } from "./pages";
+import "bootstrap-icons/font/bootstrap-icons.css";
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<PageLayout />}>
-          <Route index path="/" element={<MovieSearch />} />
-          <Route path="/movies" element={<MovieList />} />
-          <Route path="/movies/:movieId" element={<MovieDetails />} />
-        </Route>
-        <Route path="*" element={<NotFound />} />
-      </Routes>
-    </BrowserRouter>
+    <Provider store={store}>
+      <AppRouter />
+    </Provider>
   </StrictMode>
 );

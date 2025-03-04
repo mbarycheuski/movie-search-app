@@ -1,0 +1,7 @@
+.spinner {
+    display: block;
+    position: fixed;
+    z-index: 9999;
+    top: 50%;
+    right: 50%;
+}
