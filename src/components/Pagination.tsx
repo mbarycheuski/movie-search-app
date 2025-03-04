@@ -75,16 +75,14 @@ const PaginationComponent = ({
     }
   }, [pagesCount, currentPage, onPageChanged]);
 
+  if (!isPaginationShown) return null;
+
   return (
-    <>
-      {isPaginationShown && (
-        <Pagination>
-          <Pagination.Prev onClick={handlePreviousPageClick} disabled={isCurrentPageFirst} />
-          {pageNumbers}
-          <Pagination.Next onClick={handleNextPageClick} disabled={isCurrentPageLast} />
-        </Pagination>
-      )}
-    </>
+    <Pagination>
+      <Pagination.Prev onClick={handlePreviousPageClick} disabled={isCurrentPageFirst} />
+      {pageNumbers}
+      <Pagination.Next onClick={handleNextPageClick} disabled={isCurrentPageLast} />
+    </Pagination>
   );
 };
 
