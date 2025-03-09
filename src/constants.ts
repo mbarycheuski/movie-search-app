@@ -1,6 +1,7 @@
 // API URLs
 export const API_URL = "https://api.themoviedb.org/3";
 export const API_IMAGE_URL = "https://image.tmdb.org/t/p/original/";
+export const API_GENRES_CACHE_EXPIRATION_IN_SECONDS = 3600; // Cache expiration set to 1 hour
 
 // searh parameters
 export const SEARCH_PARAM = "search";

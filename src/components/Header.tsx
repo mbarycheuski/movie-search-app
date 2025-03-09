@@ -1,7 +1,10 @@
 import { NavLink } from "react-router";
-import { Navbar, Nav, Container } from "react-bootstrap";
+import { Navbar, Nav, Container, Badge } from "react-bootstrap";
+import { useFavoriteMovies } from "../hooks";
 
 const Header = () => {
+  const { movies } = useFavoriteMovies();
+
   return (
     <Navbar collapseOnSelect expand="lg" bg="dark" data-bs-theme="dark">
       <Container>
@@ -16,6 +19,9 @@ const Header = () => {
             </Nav.Link>
             <Nav.Link as={NavLink} to="/movies">
               My Movies
+              <Badge bg="secondary" className="ms-1">
+                {movies.length}
+              </Badge>
             </Nav.Link>
           </Nav>
         </Navbar.Collapse>
