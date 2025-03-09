@@ -9,3 +9,4 @@ export { default as MovieSearchList } from "./MovieSearchList";
 export { default as NoMoviesFound } from "./NoMoviesFound";
 export { default as MovieCard } from "./MovieCard/MovieCard";
 export { default as FavoriteMovieCard } from "./FavoriteMovieCard";
+export { default as FavoriteMovieFilterForm } from "./FavoriteMovieFilterForm";
