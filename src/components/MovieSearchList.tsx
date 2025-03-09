@@ -1,7 +1,10 @@
 import { Container, Row, Col } from "react-bootstrap";
-import { Movie } from "../api/models";
 import { ITEMS_PER_PAGE } from "../constants";
-import { MovieCard, Pagination } from ".";
+import MovieSearchCard from "./MovieSearchCard";
+import Pagination from "./Pagination";
+import { useFavoriteMovies } from "../hooks";
+import { Movie } from "../types";
+import { convertToFavoriteMovie } from "../transforms";
 
 type MovieSearchListProps = {
   movies: Movie[];
@@ -16,6 +19,20 @@ const MovieSearchList = ({
   totalPages,
   onPageChanged,
 }: MovieSearchListProps) => {
+  const { addFavorite, removeFavorite, checkFavorite } = useFavoriteMovies();
+
+  const handleMovieCardClick = (movie: Movie) => {
+    if (checkFavorite(movie.id)) {
+      removeFavorite(movie.id);
+      return;
+    }
+
+    const favoriteMovie = convertToFavoriteMovie(movie);
+    addFavorite(favoriteMovie);
+  };
+
+  const getButtonText = (movie: Movie) => checkFavorite(movie.id) ? "Remove from favorites" : "Add to favorites";
+
   if (movies.length === 0) return null;
 
   return (
@@ -24,7 +41,11 @@ const MovieSearchList = ({
         <Row>
           {movies.map((movie) => (
             <Col key={movie.id} xs={12} sm={6} md={4} lg={3} className="mb-3">
-              <MovieCard movie={movie} />
+              <MovieSearchCard
+                buttonText={getButtonText(movie)}
+                movie={movie}
+                onClick={handleMovieCardClick}
+              />
             </Col>
           ))}
         </Row>

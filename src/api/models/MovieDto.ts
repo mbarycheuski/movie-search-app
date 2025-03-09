@@ -1,4 +1,4 @@
-type Movie = {
+type MovieDto = {
   adult: boolean;
   backdrop_path: string;
   genre_ids: number[];
@@ -15,4 +15,4 @@ type Movie = {
   vote_count: number;
 };
 
-export default Movie;
+export default MovieDto;
