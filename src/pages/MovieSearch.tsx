@@ -3,14 +3,9 @@ import { Container } from "react-bootstrap";
 import { SearchFormInput } from "../types";
 import { DEFAULT_PAGE } from "../constants";
 import { useQueryParameters } from "../hooks";
+import { convertToMovie } from "../transforms";
 import { useSearchMoviesQuery } from "../api/services";
-import {
-  SearchForm,
-  Spinner,
-  MovieSearchError,
-  MovieSearchList,
-  NoMoviesFound,
-} from "../components";
+import { SearchForm, Spinner, ErrorContainer, MovieSearchList, NoMoviesFound } from "../components";
 
 const MovieSearch = () => {
   const {
@@ -27,7 +22,7 @@ const MovieSearch = () => {
     { skip: !searchTitle || !isValidParameters }
   );
 
-  const movies = currentData?.results ?? [];
+  const movies = currentData?.results.map(convertToMovie) ?? [];
   const totalPages = currentData?.total_pages ?? DEFAULT_PAGE;
   const isNoMoviesFound = !isError && !isUninitialized && !isFetching && movies.length === 0;
 
@@ -47,7 +42,7 @@ const MovieSearch = () => {
 
     if (isError)
       return (
-        <MovieSearchError
+        <ErrorContainer
           className="d-flex justify-content-center mt-3"
           message="Something went wrong while fetching the movies. Please try again later."
         />
@@ -67,7 +62,7 @@ const MovieSearch = () => {
 
   if (!isValidParameters) {
     return (
-      <MovieSearchError
+      <ErrorContainer
         className="d-flex justify-content-center mt-3"
         message="Invalid search parameters."
       />

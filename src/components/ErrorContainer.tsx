@@ -1,12 +1,12 @@
 import { Container, Alert } from "react-bootstrap";
 
-type MovieSearchErrorProps = React.ComponentProps<typeof Container> & {
+type ErrorContainerProps = React.ComponentProps<typeof Container> & {
   message: string;
 };
 
-const MovieSearchError = ({ message, className, ...props }: MovieSearchErrorProps) => {
+const ErrorContainer = ({ message, ...props }: ErrorContainerProps) => {
   return (
-    <Container className={className} {...props}>
+    <Container {...props}>
       <Alert variant="danger">
         <Alert.Heading>Oh snap! You got an error!</Alert.Heading>
         <p>{message}</p>
@@ -15,4 +15,4 @@ const MovieSearchError = ({ message, className, ...props }: MovieSearchErrorProp
   );
 };
 
-export default MovieSearchError;
+export default ErrorContainer;
