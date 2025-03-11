@@ -1,9 +1,9 @@
 import { Container, Row, Col } from "react-bootstrap";
-import { ITEMS_PER_PAGE } from "../constants";
-import MovieSearchCard from "./MovieSearchCard";
 import Pagination from "./Pagination";
-import { useFavoriteMovies } from "../hooks";
+import MovieSearchCard from "./MovieSearchCard";
 import { Movie } from "../types";
+import { useFavoriteMovies } from "../hooks";
+import { ITEMS_PER_PAGE } from "../constants";
 import { convertToFavoriteMovie } from "../transforms";
 
 type MovieSearchListProps = {

@@ -24,7 +24,8 @@ const favoritesSlice = createSlice({
     watchMovie: (state, { payload }: PayloadAction<number>) => {
       const index = state.movies.findIndex(movie => movie.id === payload);
 
-      if (index === -1) throw new Error(`Movie with id ${payload} not found`);
+      if (index === -1)
+        throw new Error(`Movie with id ${payload} not found`);
 
       state.movies[index].isWatched = true;
     }

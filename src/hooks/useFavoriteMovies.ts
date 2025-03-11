@@ -18,9 +18,7 @@ const useFavoriteMovies = () => {
     dispatch(watchMovie(id));
   };
 
-  const checkFavorite = (id: number) => {
-    return movies.some(movie => movie.id === id);
-  };
+  const checkFavorite = (id: number) => movies.some(movie => movie.id === id);
 
   return { movies, watchFavorite, addFavorite, removeFavorite, checkFavorite };
 };
