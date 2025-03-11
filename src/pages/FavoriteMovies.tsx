@@ -1,4 +1,4 @@
-import { useCallback, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import { Container, Row, Col } from "react-bootstrap";
 import { useFavoriteMovies } from "../hooks";
 import { sortMovies, filterMovie } from "../utils";
@@ -17,17 +17,17 @@ const FavoriteMovies = () => {
   const favorites = useMemo(() => {
     const filteredMovies = movies.filter(x => filterMovie(x, filterForm));
     return sortMovies(filteredMovies);
-  }, [movies, filterForm, filterMovie, sortMovies]);
+  }, [movies, filterForm]);
 
-  const handleWatchClick = useCallback((id: number) => {
+  const handleWatchClick = (id: number) => {
     watchFavorite(id);
-  }, [watchFavorite]);
+  };
 
-  const handleRemoveClick = useCallback((id: number) => {
+  const handleRemoveClick = (id: number) => {
     removeFavorite(id);
-  }, [removeFavorite]);
+  };
 
-  const handleFilter = (form: FavoriteMovieFilterFormInput) => {
+  const handleFilterSubmit = (form: FavoriteMovieFilterFormInput) => {
     setFilterForm(form);
   };
 
@@ -51,7 +51,7 @@ const FavoriteMovies = () => {
 
   return (
     <>
-      <FavoriteMovieFilterForm form={filterForm} onSubmit={handleFilter} onReset={handleFilterReset} />
+      <FavoriteMovieFilterForm form={filterForm} onSubmit={handleFilterSubmit} onReset={handleFilterReset} />
       <Container className="mt-3">{renderContainer()}</Container>
     </>
   );

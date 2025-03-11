@@ -3,8 +3,8 @@ import { Link } from "react-router";
 import { trimText } from "../../utils";
 import { Movie } from "../../types";
 import MovieRating from "../MovieRating";
-import movieCardClasses from "./MovieCard.module.css";
 import GenreBadges from './GenreBadges';
+import movieCardClasses from "./MovieCard.module.css";
 
 type MovieCardProps = {
   movie: Movie;
