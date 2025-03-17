@@ -3,7 +3,7 @@ import { Container, Row, Col } from "react-bootstrap";
 import { useFavoriteMovies } from "../hooks";
 import { sortMovies, filterMovie } from "../utils";
 import { FavoriteMovieFilterFormInput, FavoriteMovieStatus } from "../types";
-import { NoMoviesFound, FavoriteMovieCard, FavoriteMovieFilterForm } from "../components";
+import { NoMoviesFound, MovieCard, FavoriteMovieFilterForm } from "../components";
 
 const defaultFilterForm: FavoriteMovieFilterFormInput = {
   movieTitle: "",
@@ -11,21 +11,13 @@ const defaultFilterForm: FavoriteMovieFilterFormInput = {
 };
 
 const FavoriteMovies = () => {
-  const { movies, watchFavorite, removeFavorite } = useFavoriteMovies();
+  const { movies } = useFavoriteMovies();
   const [filterForm, setFilterForm] = useState<FavoriteMovieFilterFormInput>(defaultFilterForm);
 
   const favorites = useMemo(() => {
     const filteredMovies = movies.filter(x => filterMovie(x, filterForm));
     return sortMovies(filteredMovies);
   }, [movies, filterForm]);
-
-  const handleWatchClick = (id: number) => {
-    watchFavorite(id);
-  };
-
-  const handleRemoveClick = (id: number) => {
-    removeFavorite(id);
-  };
 
   const handleFilterSubmit = (form: FavoriteMovieFilterFormInput) => {
     setFilterForm(form);
@@ -42,7 +34,7 @@ const FavoriteMovies = () => {
       <Row>
         {favorites.map((movie) => (
           <Col key={movie.id} xs={12} sm={6} md={4} lg={3} className="mb-3">
-            <FavoriteMovieCard movie={movie} onRemove={handleRemoveClick} onWatch={handleWatchClick} />
+            <MovieCard movie={movie} badge={movie.isWatched ? "Watched" : undefined} />
           </Col>
         ))}
       </Row>

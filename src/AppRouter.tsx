@@ -8,7 +8,7 @@ const AppRouter = () => {
         <Route path="/" element={<PageLayout />}>
           <Route index path="/" element={<MovieSearch />} />
           <Route path="/movies" element={<FavoriteMovies />} />
-          <Route path="/movies/:id" element={<MovieDetails />} />
+          <Route path="/movies/:movieId" element={<MovieDetails />} />
         </Route>
         <Route path="*" element={<NotFound />} />
       </Routes>

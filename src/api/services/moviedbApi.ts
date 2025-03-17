@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { MovieResponseDto, GenreResponseDto } from "../models";
+import { MovieResponseDto, GenreResponseDto, MovieDetailDto } from "../models";
 import {
   API_URL,
   API_IMAGE_URL,
@@ -8,6 +8,8 @@ import {
 } from "../../constants";
 
 const API_KEY = import.meta.env.VITE_MOVIE_DB_API_TOKEN;
+
+const getPosterPath = (path?: string) => path ? `${API_IMAGE_URL}${path}` : path;
 
 export const moviedbApi = createApi({
   reducerPath: "moviedbApi",
@@ -38,7 +40,7 @@ export const moviedbApi = createApi({
           ...response,
           results: response?.results.map((movie) => ({
             ...movie,
-            poster_path: movie.poster_path ? `${API_IMAGE_URL}${movie.poster_path}` : undefined,
+            poster_path: getPosterPath(movie.poster_path),
           })),
         }),
       }
@@ -47,7 +49,14 @@ export const moviedbApi = createApi({
       query: () => "genre/movie/list",
       keepUnusedDataFor: API_GENRES_CACHE_EXPIRATION_IN_SECONDS,
     }),
+    getMovieDetails: builder.query<MovieDetailDto, { movieId: number }>({
+      query: ({ movieId }) => `movie/${movieId}`,
+      transformResponse: (response: MovieDetailDto) => ({
+        ...response,
+        poster_path: getPosterPath(response.poster_path),
+      }),
+    }),
   }),
 });
 
-export const { useSearchMoviesQuery, useGetGenresQuery } = moviedbApi;
+export const { useSearchMoviesQuery, useGetGenresQuery, useGetMovieDetailsQuery } = moviedbApi;
