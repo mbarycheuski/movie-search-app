@@ -3,17 +3,16 @@ import { Link } from "react-router";
 import { trimText } from "../../utils";
 import { Movie } from "../../types";
 import MovieRating from "../MovieRating";
-import MovieActions from "../MovieActions";
 import GenreBadges from './GenreBadges';
 import movieCardClasses from "./MovieCard.module.css";
 
 type MovieCardProps = {
   movie: Movie;
   badge?: string;
-  showWatchedButton?: boolean;
+  children?: React.ReactNode;
 };
 
-const MovieCard = ({ movie, badge, showWatchedButton = true }: MovieCardProps) => {
+const MovieCard = ({ movie, badge, children }: MovieCardProps) => {
   const route = `/movies/${movie.id}`;
 
   return (
@@ -47,7 +46,7 @@ const MovieCard = ({ movie, badge, showWatchedButton = true }: MovieCardProps) =
         <Card.Text>
           <MovieRating rating={movie.rating} />
         </Card.Text>
-        <MovieActions movie={movie} showWatchedButton={showWatchedButton} />
+        {children}
       </Card.Body>
     </Card>
   );

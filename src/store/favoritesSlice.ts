@@ -1,10 +1,20 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { FavoriteMovie, FavoriteMoviePersonalDetails } from "../types";
 
-const FAVIRITE_MOVIES_SLICE_NAME = "favoriteMovies";
+const FAVORITE_MOVIES_SLICE_NAME = "favoriteMovies";
 
 type FavoritesState = {
   movies: FavoriteMovie[];
+}
+
+type UpdateMovieWatchStatusPayload = {
+  id: number;
+  isWatched: boolean;
+}
+
+type UpdateMoviePersonalDetailsPayload = {
+  id: number;
+  details: FavoriteMoviePersonalDetails;
 }
 
 const initialState: FavoritesState = {
@@ -12,7 +22,7 @@ const initialState: FavoritesState = {
 };
 
 const favoritesSlice = createSlice({
-  name: FAVIRITE_MOVIES_SLICE_NAME,
+  name: FAVORITE_MOVIES_SLICE_NAME,
   initialState,
   reducers: {
     addMovie: (state, { payload }: PayloadAction<FavoriteMovie>) => {
@@ -21,16 +31,15 @@ const favoritesSlice = createSlice({
     removeMovie: (state, { payload }: PayloadAction<number>) => {
       state.movies = state.movies.filter(movie => movie.id !== payload);
     },
-    watchMovie: (state, { payload }: PayloadAction<number>) => {
-      const index = state.movies.findIndex(movie => movie.id === payload);
+    updateMovieWatchStatus: (state, { payload: { id, isWatched } }: PayloadAction<UpdateMovieWatchStatusPayload>) => {
+      const index = state.movies.findIndex(movie => movie.id === id);
 
       if (index === -1)
-        throw new Error(`Movie with id ${payload} not found`);
+        throw new Error(`Movie with id ${id} not found`);
 
-      state.movies[index].isWatched = true;
+      state.movies[index].isWatched = isWatched;
     },
-    updateMoviePersonalDetails: (state, { payload: { id, details } }:
-      PayloadAction<{ id: number, details: FavoriteMoviePersonalDetails }>) => {
+    updateMoviePersonalDetails: (state, { payload: { id, details } }: PayloadAction<UpdateMoviePersonalDetailsPayload>) => {
       const index = state.movies.findIndex(movie => movie.id === id);
 
       if (index === -1)
@@ -39,10 +48,10 @@ const favoritesSlice = createSlice({
       const movie = state.movies[index];
       movie.updatedAt = new Date().toISOString();
       movie.personalDetails = { ...movie.personalDetails, ...details };
-    },
+    }
   }
 });
 
-export const { addMovie, removeMovie, watchMovie, updateMoviePersonalDetails } = favoritesSlice.actions;
+export const { addMovie, removeMovie, updateMovieWatchStatus, updateMoviePersonalDetails } = favoritesSlice.actions;
 
 export default favoritesSlice.reducer;

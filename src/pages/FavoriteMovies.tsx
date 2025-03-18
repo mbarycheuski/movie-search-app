@@ -2,8 +2,11 @@ import { useMemo, useState } from "react";
 import { Container, Row, Col } from "react-bootstrap";
 import { useFavoriteMovies } from "../hooks";
 import { sortMovies, filterMovie } from "../utils";
-import { FavoriteMovieFilterFormInput, FavoriteMovieStatus } from "../types";
-import { NoMoviesFound, MovieCard, FavoriteMovieFilterForm } from "../components";
+import { FavoriteMovieFilterFormInput, FavoriteMovieStatus, MovieAction } from "../types";
+import { NoMoviesFound, MovieCard, FavoriteMovieFilterForm, MovieActions } from "../components";
+import { ADD_MOVIE_ACTION, REMOVE_MOVIE_ACTION, UPDATE_MOVIE_WATCH_STATUS_ACTION } from "../constants";
+
+const movieActions: MovieAction[] = [ADD_MOVIE_ACTION, UPDATE_MOVIE_WATCH_STATUS_ACTION, REMOVE_MOVIE_ACTION];
 
 const defaultFilterForm: FavoriteMovieFilterFormInput = {
   movieTitle: "",
@@ -34,7 +37,9 @@ const FavoriteMovies = () => {
       <Row>
         {favorites.map((movie) => (
           <Col key={movie.id} xs={12} sm={6} md={4} lg={3} className="mb-3">
-            <MovieCard movie={movie} badge={movie.isWatched ? "Watched" : undefined} />
+            <MovieCard movie={movie} badge={movie.isWatched ? "Watched" : undefined}>
+              <MovieActions movie={movie} allowedActions={movieActions} />
+            </MovieCard>
           </Col>
         ))}
       </Row>

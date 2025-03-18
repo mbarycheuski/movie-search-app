@@ -1,11 +1,10 @@
-import { Container, Row, Col, Badge, Image } from "react-bootstrap";
-import { useFavoriteMovies, useMovieIdParams } from "../hooks";
-import { useGetMovieDetailsQuery } from "../api/services";
+import { Container } from "react-bootstrap";
+import { useMovieIdParams } from "../hooks";
 import { convertToMovieDetail } from "../transforms";
-import { Spinner, ErrorContainer, MovieDatailInfo, MovieActions, MoviePersonalDetails } from "../components";
+import { useGetMovieDetailsQuery } from "../api/services";
+import { Spinner, ErrorContainer, MovieDetailsContent } from "../components";
 
 const MovieDetails = () => {
-  const { movies } = useFavoriteMovies();
   const { movieId, isValid } = useMovieIdParams();
 
   const { currentData, isError, isFetching, error } = useGetMovieDetailsQuery(
@@ -14,7 +13,6 @@ const MovieDetails = () => {
   );
 
   const movieDetail = currentData ? convertToMovieDetail(currentData) : null;
-  const favoriteMovie = isValid ? movies.find(movie => movie.id === movieId) : null;;
 
   const renderContainer = () => {
     if (!isValid) {
@@ -42,31 +40,7 @@ const MovieDetails = () => {
     }
 
     return (
-      <Row>
-        <Col md={4} className="d-flex justify-content-center position-relative">
-          <div className="position-relative">
-            <Image
-              src={movieDetail.posterPath || "/no_poster_image.svg"}
-              alt={movieDetail.title} className="img-fluid" />
-            {favoriteMovie?.isWatched && (
-              <Badge bg="danger" className="position-absolute top-0 end-0 m-2">Watched</Badge>
-            )}
-          </div>
-        </Col>
-        <Col md={8} className="mt-3 mt-md-0">
-          <Container>
-            <Row>
-              <MovieDatailInfo movie={movieDetail} />
-            </Row>
-            {favoriteMovie && (<Row className="my-3 border-dark border-top border-2 pt-2">
-              <MoviePersonalDetails movie={favoriteMovie} />
-            </Row>)}
-            <Row className="my-3 border-dark border-top border-2 pt-2">
-              <MovieActions movie={movieDetail} showWatchedButton />
-            </Row>
-          </Container>
-        </Col>
-      </Row>
+      <MovieDetailsContent movie={movieDetail} />
     );
   };
 

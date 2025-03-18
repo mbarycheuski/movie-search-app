@@ -1,8 +1,11 @@
 import { Container, Row, Col } from "react-bootstrap";
-import { ITEMS_PER_PAGE } from "../constants";
-import { Movie } from "../types";
+import { Movie, MovieAction } from "../types";
 import MovieCard from "./MovieCard/MovieCard";
 import Pagination from "./Pagination";
+import MovieActions from "./MovieActions/MovieActions";
+import { ADD_MOVIE_ACTION, REMOVE_MOVIE_ACTION, ITEMS_PER_PAGE } from "../constants";
+
+const movieActions: MovieAction[] = [ADD_MOVIE_ACTION, REMOVE_MOVIE_ACTION];
 
 type MovieSearchListProps = {
   movies: Movie[];
@@ -25,7 +28,9 @@ const MovieSearchList = ({
         <Row>
           {movies.map((movie) => (
             <Col key={movie.id} xs={12} sm={6} md={4} lg={3} className="mb-3">
-              <MovieCard movie={movie} showWatchedButton={false} />
+              <MovieCard movie={movie}>
+                <MovieActions movie={movie} allowedActions={movieActions} />
+              </MovieCard>
             </Col>
           ))}
         </Row>

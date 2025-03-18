@@ -10,5 +10,6 @@ export { default as MovieCard } from "./MovieCard/MovieCard";
 export { default as FavoriteMovieFilterForm } from "./FavoriteMovieFilterForm";
 export { default as MovieDatailInfo } from "./MovieDatailInfo";
 export { default as ConfirmationModal } from "./ConfirmationModal";
-export { default as MovieActions } from "./MovieActions";
+export { default as MovieActions } from "./MovieActions/MovieActions";
 export { default as MoviePersonalDetails } from "./MoviePersonalDetails";
+export { default as MovieDetailsContent } from "./MovieDetailsContent";

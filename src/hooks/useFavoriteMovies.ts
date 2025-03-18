@@ -1,6 +1,6 @@
 import { useSelector, useDispatch } from "react-redux";
-import { RootState, AppDispatch, addMovie, removeMovie, watchMovie, updateMoviePersonalDetails } from "../store";
 import { FavoriteMovie } from "../types";
+import { RootState, AppDispatch, addMovie, removeMovie, updateMovieWatchStatus, updateMoviePersonalDetails } from "../store";
 
 const useFavoriteMovies = () => {
   const dispatch: AppDispatch = useDispatch();
@@ -14,8 +14,8 @@ const useFavoriteMovies = () => {
     dispatch(removeMovie(id));
   };
 
-  const watchFavorite = (id: number) => {
-    dispatch(watchMovie(id));
+  const updateFavoriteWatchStatus = (id: number, isWatched: boolean) => {
+    dispatch(updateMovieWatchStatus({ id, isWatched }));
   };
 
   const updateFavoritePersonalDetails = (id: number, notes: string, rating: number) => {
@@ -24,7 +24,7 @@ const useFavoriteMovies = () => {
 
   const checkFavorite = (id: number) => movies.some(movie => movie.id === id);
 
-  return { movies, watchFavorite, addFavorite, removeFavorite, checkFavorite, updateFavoritePersonalDetails };
+  return { movies, updateFavoriteWatchStatus, addFavorite, removeFavorite, checkFavorite, updateFavoritePersonalDetails };
 };
 
 export default useFavoriteMovies;
