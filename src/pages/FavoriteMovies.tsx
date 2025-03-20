@@ -15,7 +15,7 @@ const defaultFilterForm: FavoriteMovieFilterFormInput = {
 
 const FavoriteMovies = () => {
   const { movies } = useFavoriteMovies();
-  const [filterForm, setFilterForm] = useState<FavoriteMovieFilterFormInput>(defaultFilterForm);
+  const [filterForm, setFilterForm] = useState(defaultFilterForm);
 
   const favorites = useMemo(() => {
     const filteredMovies = movies.filter(x => filterMovie(x, filterForm));

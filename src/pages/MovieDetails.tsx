@@ -8,7 +8,7 @@ const MovieDetails = () => {
   const { movieId, isValid } = useMovieIdParams();
 
   const { currentData, isError, isFetching, error } = useGetMovieDetailsQuery(
-    { movieId: movieId },
+    { movieId },
     { skip: !isValid }
   );
 
@@ -39,14 +39,10 @@ const MovieDetails = () => {
       );
     }
 
-    return (
-      <MovieDetailsContent movie={movieDetail} />
-    );
+    return <MovieDetailsContent movie={movieDetail} />;
   };
 
-  return (
-    <Container className="mt-3">{renderContainer()}</Container>
-  );
+  return <Container className="mt-3">{renderContainer()}</Container>;
 };
 
 export default MovieDetails;

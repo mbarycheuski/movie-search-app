@@ -10,23 +10,25 @@ import {
   MAX_PAGE,
 } from "../constants";
 
-const validatePage = (page: number) => page > 0 && page <= MAX_PAGE;
-
-const validateYear = (year?: number) =>
-  year === undefined || (year >= MIN_YEAR && year <= MAX_YEAR);
-
 type QueryParameters = {
   search?: string;
   page?: number;
   year?: number;
 };
 
+const validatePage = (page: number) => page > 0 && page <= MAX_PAGE;
+
+const validateYear = (year?: number) =>
+  year === undefined || (year >= MIN_YEAR && year <= MAX_YEAR);
+
 const useQueryParameters = () => {
   const [searchParams, setSearchParams] = useSearchParams();
 
   const search = searchParams.get(SEARCH_PARAM) || undefined;
   const page = Number(searchParams.get(PAGE_PARAM)) || DEFAULT_PAGE;
-  const year = searchParams.get(YEAR_PARAM) ? Number(searchParams.get(YEAR_PARAM)) : undefined;
+  const year = searchParams.get(YEAR_PARAM)
+    ? Number(searchParams.get(YEAR_PARAM))
+    : undefined;
 
   const isValid = validatePage(page) && validateYear(year);
 

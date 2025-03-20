@@ -40,15 +40,18 @@ const MovieSearch = () => {
   const renderContainer = () => {
     if (isFetching) return <Spinner />;
 
-    if (isError)
+    if (isError) {
       return (
         <ErrorContainer
           className="d-flex justify-content-center mt-3"
           message="Something went wrong while fetching the movies. Please try again later."
         />
       );
+    }
 
-    if (isNoMoviesFound) return <NoMoviesFound className="d-flex justify-content-center mt-3" />;
+    if (isNoMoviesFound) {
+      return <NoMoviesFound className="d-flex justify-content-center mt-3" />;
+    }
 
     return (
       <MovieSearchList

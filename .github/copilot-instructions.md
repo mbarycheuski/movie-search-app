@@ -1,3 +1,5 @@
+# Code writting
+
 - Always use arrow functions.
 - Always use functional components and hooks instead of class components.
 - Always use TypeScript types for type checking props.
@@ -17,3 +19,11 @@
 - Prefer spreading props over manually passing each prop individually.
 - Do not user React.FC<> and FC<> functions.
 - Do not write any code comments.
+
+# Code refactoring
+
+- Be strict during code review and refactoring.
+- Follow a consistent coding style and conventions throughout the codebase.
+- Ensure that the code is easy to read and understand.
+- Verify that the code follows best practices for security and does not introduce vulnerabilities.
+- Refactor deeply nested code to flatten the structure and make it easier to understand.
