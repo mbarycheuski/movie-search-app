@@ -1,4 +1,4 @@
-# Code writting
+# Code writing
 
 - Always use arrow functions.
 - Always use functional components and hooks instead of class components.
