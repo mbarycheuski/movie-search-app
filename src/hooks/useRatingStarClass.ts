@@ -7,13 +7,10 @@ const useRatingStarClass = (rating: number) => {
   const hasFractionalPart = checkNumberFractionalPart(rating);
 
   const getStarClass = (starIndex: number): string => {
-    if (starIndex < wholeRating) {
-      return `${BASE_ICON_CLASS} bi-star-fill text-warning`;
-    }
+    if (starIndex < wholeRating) return `${BASE_ICON_CLASS} bi-star-fill text-warning`;
 
-    if (starIndex === wholeRating && hasFractionalPart) {
+    if (starIndex === wholeRating && hasFractionalPart)
       return `${BASE_ICON_CLASS} bi-star-half text-warning`;
-    }
 
     return `${BASE_ICON_CLASS} bi-star text-muted`;
   };

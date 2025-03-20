@@ -1,10 +1,11 @@
 import { Container, Row, Col } from "react-bootstrap";
+import { Movie, MovieAction } from "../types";
+import MovieCard from "./MovieCard";
 import Pagination from "./Pagination";
-import MovieSearchCard from "./MovieSearchCard";
-import { Movie } from "../types";
-import { useFavoriteMovies } from "../hooks";
-import { ITEMS_PER_PAGE } from "../constants";
-import { convertToFavoriteMovie } from "../transforms";
+import MovieActions from "./MovieActions";
+import { ADD_MOVIE_ACTION, REMOVE_MOVIE_ACTION, ITEMS_PER_PAGE } from "../constants";
+
+const movieActions: MovieAction[] = [ADD_MOVIE_ACTION, REMOVE_MOVIE_ACTION];
 
 type MovieSearchListProps = {
   movies: Movie[];
@@ -14,38 +15,22 @@ type MovieSearchListProps = {
 };
 
 const MovieSearchList = ({
-  movies,
+  movies = [],
   currentPage,
   totalPages,
   onPageChanged,
 }: MovieSearchListProps) => {
-  const { addFavorite, removeFavorite, checkFavorite } = useFavoriteMovies();
-
-  const handleMovieCardClick = (movie: Movie) => {
-    if (checkFavorite(movie.id)) {
-      removeFavorite(movie.id);
-      return;
-    }
-
-    const favoriteMovie = convertToFavoriteMovie(movie);
-    addFavorite(favoriteMovie);
-  };
-
-  const getButtonText = (movie: Movie) => checkFavorite(movie.id) ? "Remove from favorites" : "Add to favorites";
-
   if (movies.length === 0) return null;
 
   return (
     <>
       <Container>
         <Row>
-          {movies.map((movie) => (
+          {movies.map(movie => (
             <Col key={movie.id} xs={12} sm={6} md={4} lg={3} className="mb-3">
-              <MovieSearchCard
-                buttonText={getButtonText(movie)}
-                movie={movie}
-                onClick={handleMovieCardClick}
-              />
+              <MovieCard movie={movie}>
+                <MovieActions movie={movie} allowedActions={movieActions} />
+              </MovieCard>
             </Col>
           ))}
         </Row>
