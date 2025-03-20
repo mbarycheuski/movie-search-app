@@ -21,12 +21,11 @@ const MovieRating = ({
 
   const handleStarClick = (starIndex: number) => {
     if (interactive && onChange) {
-      const newRating = starIndex + 1;
-      onChange(newRating);
+      onChange(starIndex + 1);
     }
   };
 
-  const baseClassName = `${className} ${interactive ? "cursor-pointer" : ""}`
+  const baseClassName = `${className} ${interactive ? "cursor-pointer" : ""}`;
 
   return (
     <>
@@ -35,7 +34,7 @@ const MovieRating = ({
           key={index}
           className={`${baseClassName} ${getStarClass(index)}`}
           onClick={() => handleStarClick(index)}
-        ></i>
+        />
       ))}
       <span className="ms-1">({rating})</span>
     </>

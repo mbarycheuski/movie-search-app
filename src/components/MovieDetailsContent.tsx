@@ -1,6 +1,6 @@
 import { Row, Col, Badge, Image, Container } from "react-bootstrap";
 import MovieDatailInfo from "./MovieDatailInfo";
-import MovieActions from "./MovieActions/MovieActions";
+import MovieActions from "./MovieActions";
 import MoviePersonalDetails from "./MoviePersonalDetails";
 import { useFavoriteMovies } from "../hooks";
 import { MovieDetail, MovieAction } from "../types";
@@ -46,7 +46,6 @@ const MovieDetailsContent = ({ movie }: MovieDetailsContentProps) => {
             </Col>
         </Row>
     );
-
 }
 
 export default MovieDetailsContent;

@@ -1,9 +1,10 @@
 import { useEffect } from "react";
 import { Form, Button, ButtonGroup } from "react-bootstrap";
 import { useForm, Controller } from "react-hook-form";
-import { FavoriteMovie } from "../types";
-import { useFavoriteMovies } from "../hooks";
-import MovieRating from "./MovieRating";
+import { FavoriteMovie } from "../../types";
+import { useFavoriteMovies } from "../../hooks";
+import MovieRating from "../MovieRating";
+import detailsClasses from "./MoviePersonalDetails.module.css";
 
 type MoviePersonalDetailsProps = {
     movie: FavoriteMovie
@@ -14,13 +15,15 @@ type MoviePersonalDetailsForm = {
     notes: string;
 };
 
-const MoviePersonalBlock = ({ movie }: MoviePersonalDetailsProps) => {
+const getDefaultFormValues = (movie: FavoriteMovie) => ({
+    rating: movie.personalDetails?.rating || 0,
+    notes: movie.personalDetails?.notes || "",
+});
+
+const MoviePersonalDetails = ({ movie }: MoviePersonalDetailsProps) => {
     const { updateFavoritePersonalDetails } = useFavoriteMovies();
 
-    const defaultValues = {
-        rating: movie.personalDetails?.rating || 0,
-        notes: movie.personalDetails?.notes || "",
-    }
+    const defaultValues = getDefaultFormValues(movie);
 
     const {
         register,
@@ -30,7 +33,7 @@ const MoviePersonalBlock = ({ movie }: MoviePersonalDetailsProps) => {
         control,
         formState: { isDirty },
     } = useForm<MoviePersonalDetailsForm>({
-        defaultValues: defaultValues
+        defaultValues
     });
 
     useEffect(() => {
@@ -43,17 +46,13 @@ const MoviePersonalBlock = ({ movie }: MoviePersonalDetailsProps) => {
         reset(defaultValues);
     };
 
-    const onReset = () => {
-        reset(defaultValues);
-    }
+    const onReset = () => reset(defaultValues);
 
     return (
         <div>
             <Form onSubmit={handleSubmit(onSubmit)}>
                 <Form.Group className="mb-3">
                     <Form.Label>My Rating</Form.Label>
-
-
                     <Controller
                         control={control}
                         name="rating"
@@ -68,15 +67,13 @@ const MoviePersonalBlock = ({ movie }: MoviePersonalDetailsProps) => {
                             </span>
                         )}
                     />
-
                 </Form.Group>
                 <Form.Group>
                     <Form.Label>My Notes</Form.Label>
                     <Form.Control
                         as="textarea"
                         placeholder="Write your notes here..."
-                        className="mb-2"
-                        style={{ maxHeight: "150px", minHeight: "75px" }}
+                        className={`mb-2 ${detailsClasses["notes-textarea"]}`}
                         {...register("notes")}
                     />
                 </Form.Group>
@@ -96,8 +93,8 @@ const MoviePersonalBlock = ({ movie }: MoviePersonalDetailsProps) => {
                     </ButtonGroup>
                 )}
             </Form>
-        </div >
+        </div>
     );
 };
 
-export default MoviePersonalBlock;
+export default MoviePersonalDetails;

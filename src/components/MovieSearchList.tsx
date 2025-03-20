@@ -1,8 +1,8 @@
 import { Container, Row, Col } from "react-bootstrap";
 import { Movie, MovieAction } from "../types";
-import MovieCard from "./MovieCard/MovieCard";
+import MovieCard from "./MovieCard";
 import Pagination from "./Pagination";
-import MovieActions from "./MovieActions/MovieActions";
+import MovieActions from "./MovieActions";
 import { ADD_MOVIE_ACTION, REMOVE_MOVIE_ACTION, ITEMS_PER_PAGE } from "../constants";
 
 const movieActions: MovieAction[] = [ADD_MOVIE_ACTION, REMOVE_MOVIE_ACTION];
