@@ -21,7 +21,7 @@ const MovieDetailsContent = ({ movie }: MovieDetailsContentProps) => {
             <Col md={4} className="d-flex justify-content-center position-relative">
                 <div className="position-relative" >
                     <Image
-                        style={{ minWidth: "400px" }}
+                        style={!movie.posterPath ? { minWidth: "300px" } : undefined}
                         src={movie.posterPath || "/no_poster_image.svg"}
                         alt={movie.title} className="img-fluid"
                     />
