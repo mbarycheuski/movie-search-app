@@ -1,5 +1,5 @@
 import { Row, Col, Badge, Image, Container } from "react-bootstrap";
-import MovieDatailInfo from "./MovieDatailInfo";
+import MovieDetailInfo from "./MovieDetailInfo";
 import MovieActions from "./MovieActions";
 import MoviePersonalDetails from "./MoviePersonalDetails";
 import { useFavoriteMovies } from "../hooks";
@@ -19,11 +19,12 @@ const MovieDetailsContent = ({ movie }: MovieDetailsContentProps) => {
     return (
         <Row>
             <Col md={4} className="d-flex justify-content-center position-relative">
-                <div className="position-relative" >
+                <div className="position-relative">
                     <Image
-                        style={!movie.posterPath ? { minWidth: "300px" } : undefined}
+                        className="img-fluid"
                         src={movie.posterPath || "/no_poster_image.svg"}
-                        alt={movie.title} className="img-fluid"
+                        alt={movie.title}
+                        style={!movie.posterPath ? { minWidth: "300px" } : undefined}
                     />
                     {favoriteMovie?.isWatched && (
                         <Badge bg="danger" className="position-absolute top-0 end-0 m-2">Watched</Badge>
@@ -33,12 +34,13 @@ const MovieDetailsContent = ({ movie }: MovieDetailsContentProps) => {
             <Col md={8} className="mt-3 mt-md-0">
                 <Container>
                     <Row>
-                        <MovieDatailInfo movie={movie} />
+                        <MovieDetailInfo movie={movie} />
                     </Row>
                     {favoriteMovie && (
                         <Row className="my-3 border-dark border-top border-2 pt-2">
                             <MoviePersonalDetails movie={favoriteMovie} />
-                        </Row>)}
+                        </Row>
+                    )}
                     <Row className="my-3 border-dark border-top border-2 pt-2">
                         <MovieActions movie={movie} allowedActions={movieActions} />
                     </Row>
@@ -46,6 +48,6 @@ const MovieDetailsContent = ({ movie }: MovieDetailsContentProps) => {
             </Col>
         </Row>
     );
-}
+};
 
 export default MovieDetailsContent;

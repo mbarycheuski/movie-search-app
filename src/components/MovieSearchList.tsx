@@ -26,7 +26,7 @@ const MovieSearchList = ({
     <>
       <Container>
         <Row>
-          {movies.map((movie) => (
+          {movies.map(movie => (
             <Col key={movie.id} xs={12} sm={6} md={4} lg={3} className="mb-3">
               <MovieCard movie={movie}>
                 <MovieActions movie={movie} allowedActions={movieActions} />

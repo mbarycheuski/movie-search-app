@@ -2,11 +2,11 @@ import { Badge } from "react-bootstrap";
 import MovieRating from "./MovieRating";
 import { MovieDetail } from "../types";
 
-type MovieDatailInfoProps = {
+type MovieDetailInfoProps = {
     movie: MovieDetail;
 };
 
-const MovieDatailInfo = ({ movie }: MovieDatailInfoProps) => (
+const MovieDetailInfo = ({ movie }: MovieDetailInfoProps) => (
     <>
         <h1>{movie.title}</h1>
         <p>{movie.overview}</p>
@@ -34,4 +34,4 @@ const MovieDatailInfo = ({ movie }: MovieDatailInfoProps) => (
     </>
 );
 
-export default MovieDatailInfo;
+export default MovieDetailInfo;
