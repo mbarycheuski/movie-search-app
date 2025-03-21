@@ -15,14 +15,13 @@ type MoviePersonalDetailsForm = {
     notes: string;
 };
 
-const getDefaultFormValues = (movie: FavoriteMovie) => ({
+const getDefaultFormValues = (movie: FavoriteMovie): MoviePersonalDetailsForm => ({
     rating: movie.personalDetails?.rating || 0,
     notes: movie.personalDetails?.notes || "",
 });
 
 const MoviePersonalDetails = ({ movie }: MoviePersonalDetailsProps) => {
     const { updateFavoritePersonalDetails } = useFavoriteMovies();
-
     const defaultValues = getDefaultFormValues(movie);
 
     const {
@@ -39,7 +38,7 @@ const MoviePersonalDetails = ({ movie }: MoviePersonalDetailsProps) => {
     useEffect(() => {
         setValue("notes", movie.personalDetails?.notes || "");
         setValue("rating", movie.personalDetails?.rating || 0);
-    }, [movie?.personalDetails?.notes, movie?.personalDetails?.rating]);
+    }, [movie.personalDetails?.notes, movie.personalDetails?.rating, setValue]);
 
     const onSubmit = (data: MoviePersonalDetailsForm) => {
         updateFavoritePersonalDetails(movie.id, data.notes, data.rating);
@@ -68,6 +67,7 @@ const MoviePersonalDetails = ({ movie }: MoviePersonalDetailsProps) => {
                         )}
                     />
                 </Form.Group>
+
                 <Form.Group>
                     <Form.Label>My Notes</Form.Label>
                     <Form.Control
@@ -77,11 +77,13 @@ const MoviePersonalDetails = ({ movie }: MoviePersonalDetailsProps) => {
                         {...register("notes")}
                     />
                 </Form.Group>
+
                 {movie.updatedAt && (
                     <small className="text-muted d-block text-end">
                         Last updated at: {new Date(movie.updatedAt).toLocaleString()}
                     </small>
                 )}
+
                 {isDirty && (
                     <ButtonGroup className="mt-2 d-flex justify-content-start">
                         <Button type="button" variant="warning" onClick={onReset}>

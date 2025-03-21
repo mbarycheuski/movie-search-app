@@ -9,10 +9,12 @@ type UpdateWatchButtonProps = {
 const UpdateWatchButton = ({ movie }: UpdateWatchButtonProps) => {
     const { updateFavoriteWatchStatus } = useFavoriteMovies();
 
+    const handleUpdateWatchStatus = () => {
+        updateFavoriteWatchStatus(movie.id, !movie.isWatched);
+    };
+
     return (
-        <Button
-            variant="dark"
-            onClick={() => updateFavoriteWatchStatus(movie.id, !movie.isWatched)} >
+        <Button variant="dark" onClick={handleUpdateWatchStatus}>
             {movie.isWatched ? "Unwatch" : "Watch"}
         </Button>
     );

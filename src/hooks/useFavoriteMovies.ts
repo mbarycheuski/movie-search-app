@@ -10,7 +10,7 @@ import {
 } from "../store";
 
 const useFavoriteMovies = () => {
-  const dispatch: AppDispatch = useDispatch();
+  const dispatch = useDispatch<AppDispatch>();
   const movies = useSelector((state: RootState) => state.favorites.movies);
 
   const addFavorite = (movie: FavoriteMovie) => dispatch(addMovie(movie));
