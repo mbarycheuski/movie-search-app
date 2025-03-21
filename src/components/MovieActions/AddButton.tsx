@@ -11,8 +11,7 @@ const AddButton = ({ movie }: AddButtonProps) => {
     const { addFavorite } = useFavoriteMovies();
 
     const handleAddFavorite = () => {
-        const favorite = convertToFavoriteMovie(movie);
-        addFavorite(favorite);
+        addFavorite(convertToFavoriteMovie(movie));
     };
 
     return (

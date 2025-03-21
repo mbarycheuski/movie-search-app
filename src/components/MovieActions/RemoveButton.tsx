@@ -12,11 +12,13 @@ const RemoveButton = ({ movie }: RemoveButtonProps) => {
     const { removeFavorite } = useFavoriteMovies();
     const modalRef = useRef<ConfirmationModalRef>(null);
 
-    const handleRemoveFavorite = () => modalRef.current?.show(
-        `Are you sure you want to remove "${movie.title}" from favorites?`
-    );
+    const handleRemoveFavorite = () => {
+        modalRef.current?.show(`Are you sure you want to remove "${movie.title}" from favorites?`);
+    };
 
-    const handleConfirmRemoveFavorite = () => removeFavorite(movie.id);
+    const handleConfirmRemoveFavorite = () => {
+        removeFavorite(movie.id);
+    };
 
     return (
         <>
@@ -27,7 +29,8 @@ const RemoveButton = ({ movie }: RemoveButtonProps) => {
                 ref={modalRef}
                 title="Confirm Removal"
                 onConfirm={handleConfirmRemoveFavorite}
-                confirmText="Remove" />
+                confirmText="Remove"
+            />
         </>
     );
 };
