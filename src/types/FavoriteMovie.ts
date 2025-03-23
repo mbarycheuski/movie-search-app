@@ -3,10 +3,9 @@ import FavoriteMoviePersonalDetails from "./FavoriteMoviePersonalDetails"
 
 type FavoriteMovie = Movie & {
   isWatched: boolean;
-  notes?: string;
   createdAt: string;
   updatedAt?: string;
-  personalDetails: FavoriteMoviePersonalDetails;
+  personalDetails?: FavoriteMoviePersonalDetails;
 };
 
 export default FavoriteMovie;
